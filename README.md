@@ -1,4 +1,4 @@
-bls-simulation
+bls-service
 ===========
 
-JavaScript data structure to represent and simulate a baseball lineup. Used to simulate and optimize at http://blsapp.net
+Node+express web service used to simulate baseball lineups at http://blsapp.net
