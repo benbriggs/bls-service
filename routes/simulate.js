@@ -1,6 +1,7 @@
 var async = require('async');
 var pg = require('pg');
-var sim = require('../objects');
+var sim = require('../sim_objects');
+var _ = require('underscore');
 var conUrl = 'postgres://' + process.env.PG_USERNAME
 		   + ':' + process.env.PG_PW + '@'
 		   + process.env.PG_SERVER + '/'
@@ -19,7 +20,7 @@ module.exports = function(req, res) {
 		req.body.lineup,
 		function(pid, callback) {
 			var queryConfig = {
-				text: 'SELECT * FROM players WHERE id = $1',
+				text: 'SELECT * FROM players WHERE id = $1::int',
 				values: [pid]
 			};
 			var query = client.query(queryConfig);

@@ -10,6 +10,7 @@
     "jade": "*",
     "pg": "2.2.0",
     "async":"0.2.9",
+    "underscore": "latest",
     "node-ga":"latest"
   }
 }

@@ -1,4 +1,4 @@
-var data = require('./data');
+var data = require('./sim_data');
 var baserunners = data.getData();
 var GameState = function(obj) {
     this.runs = 0;
@@ -16,24 +16,21 @@ var GameState = function(obj) {
     
 GameState.prototype = new function() {
     // getOutcome: generates a random number, and adds together an array of
-    //            percentages until the random number is met. the index of the
-    //            last number added is then applied to the map of each
-    //            percentages to a value to return the appropriate value.
+    //             percentages until the random number is met. the index of the
+    //             last number added is then applied to the map of each
+    //             percentages to a value to return the appropriate value.
     this.getOutcome = function (pcts, map) {
         var randnum = Math.random();
         var cur = 0.0;
         for (j = 0; j < pcts.length; j++) {
             cur += parseFloat(pcts[j]);
-            // console.log(pcts[j]);
             if (randnum <= cur) {
-                // console.log(randnum + " => " + map[j]);
                 return map[j];
             }
         }
-            // console.log('final: ' + cur);
     };
     // nextInning: if 3 outs are recorded, reset runners, outs, and add one to
-    //            the inning attribute.
+    //             the inning attribute.
     this.nextInning = function () {
         if (this.outs == 3) {
             this.bases = [0, 0, 0, 0];
@@ -85,7 +82,6 @@ GameState.prototype = new function() {
                         break;
                     case 4:
                         this.runs += 1;
-                        // console.log("score runner");
                         this.bases[i] = 0;
                         break;
                     case i:
@@ -181,7 +177,8 @@ Game.prototype = new function() {
     //              Finally, checks that there are fewer than three outs.
     //              If not, calls nextInning on the GameState.
     this.processAtBat = function (index) {
-        result = this.gamestate.getOutcome(this.lineup[index], ['si', 'do', 'tr', 'hr', 'bb', 'so', 'out']);
+        result = this.gamestate.getOutcome(this.lineup[index],
+                                           ['si', 'do', 'tr', 'hr', 'bb', 'so', 'out']);
         this.gamestate.processOutcome(result, this.lineup[index][7], this.lineup[index][8]);
         if (this.gamestate.outs >= 3) {
             this.gamestate.nextInning;

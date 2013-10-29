@@ -2,7 +2,7 @@ exports.getData = function () {
 // baserunners: 4 dimensional array of distribution of runner destinations
 // 			   accumulated from 2000-2010 Retrosheet data.
 //			   Structure:
-// 					[:baserunnerstate][:hittype][:runnernumber][:destination]
+// 					[baserunnerstate][hittype][runnernumber][destination]
 	return {
 	"100" : {
 		"si" : [

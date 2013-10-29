@@ -1,11 +1,11 @@
 var async = require('async');
 var pg = require('pg');
-var sim = require('../objects');
+var _ = require('underscore');
+var sim = require('../sim_objects');
 var conUrl = 'postgres://' + process.env.PG_USERNAME
 		   + ':' + process.env.PG_PW + '@'
 		   + process.env.PG_SERVER + '/'
 		   + process.env.PG_DB;
-var simcount = 10000;
 var optcount = 1000;
 module.exports = function (req, res) {
 	var err = false;
@@ -35,6 +35,8 @@ module.exports = function (req, res) {
 					  result.outspct,
 					  result.sbapct,
 					  result.sbpct]);
+			//keep track of info for display as the simulation progresses
+			//instead of querying DB later
 			lineup_info.push({
 				"id"       : result.id,
 				"first"    : result.first,
@@ -50,6 +52,9 @@ module.exports = function (req, res) {
 			if (err == false) {
 					return callback(null, result);
 				}
+			else {
+					return callback(err, result);
+			}
 		});
 	}
 	//optimize a lineup with a given set of 9 players
@@ -72,7 +77,7 @@ module.exports = function (req, res) {
 				return;
 			}
 			client.end();
-			var ai = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+			var ai = _.range(players.length);
 			var current_lineup = [],
 				current_runs = 0,
 				current_info = [];
